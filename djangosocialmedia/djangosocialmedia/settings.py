@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -119,3 +121,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# The following redirect url represent the default url that we will be redirected to upon a successful login attempt 
+LOGIN_REDIRECT_URL = 'blog-home'
+
+# The name that we gave to our login route in our projects urls.py.
+# The following parameter simply means that when the user is NOT LOGGED IN and tries to access a page which has the login required decorator, then it is going to redirect that the user's request to the url path that has the name "login". '
+LOGIN_URL = 'login'
