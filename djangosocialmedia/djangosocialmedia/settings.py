@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,6 +123,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# The media root represents the location of where the uploaded files will be located in the file system.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# This is how we are going to be accessing the uploaded file within the browser
+MEDIA_URL = '/media/'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # The following redirect url represent the default url that we will be redirected to upon a successful login attempt 
@@ -130,3 +137,5 @@ LOGIN_REDIRECT_URL = 'blog-home'
 # The name that we gave to our login route in our projects urls.py.
 # The following parameter simply means that when the user is NOT LOGGED IN and tries to access a page which has the login required decorator, then it is going to redirect that the user's request to the url path that has the name "login". '
 LOGIN_URL = 'login'
+
+
