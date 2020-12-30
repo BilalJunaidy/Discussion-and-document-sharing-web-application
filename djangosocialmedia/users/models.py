@@ -17,6 +17,11 @@ from PIL import Image
 #    since there are numerous ways for us to authenticate and login a Custom User model within Django. 
 #    For example, we have at our disposal the AuthenticateForm, as well as authenticate() and login() methods. 
 
+# 3. One important use case of using the Django's default User model is in the instance that you have multiple apps each in which the Profile proxy model 
+# has different requirements. So for example, you can use Django's default User model simply for the purposes of authentication, and then we can 
+# have seperate Profile proxy models (one for each django app). 
+# The reason why we would have seperate apps is because if each of these profile proxy models are different in terms of their attributes.
+
 
 
 # On the contrary, why would you actually not use this proxy model approach and actually substitute a custom user model?
