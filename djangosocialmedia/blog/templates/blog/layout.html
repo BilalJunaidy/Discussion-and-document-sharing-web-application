@@ -1,3 +1,6 @@
+<!-- The following code basically loads the static files by first accessing the STATIC_URL in the settings.py file.
+Using this location, Django is then able to reverse engineer to find the exact url of the static file in the href below 
+where we are importing the static file.  -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -19,13 +22,31 @@
         {% endif %}
     </head>
     <body>
-        <header class="site-header">
+        <header class="site-header">  
             <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
               <div class="container">
+                <!-- 
+                  I can use the navbar-brand class to the company logo and/or project name.
+                  Check out what I have done below by adding an image with this navbar-brand class.
+                  All of these navbar brands will continue to be stacked against each other horizontally. 
+                  -->
                 <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
+                <!-- <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">My company </a> -->
+                <!-- <img style="width:10vw"; class="navbar-brand mr-4" src='/media/Profile_Pics/Whatever_the_problem_be_part_of_the_solution.jpg'> -->
+                
+
+                <!-- 
+                The navbar-toggler and the navbar-nav are all coming directly from the bootstrap 4.0 official documentation.
+                https://getbootstrap.com/docs/4.0/components/navbar/
+                Since we want all of our navigation items to appear as how the "Home" navigation list element appears in the above bootstrap link, 
+                therefore, we have added the nav-item and the nav-link classess to the anchor tags below that hold our various navigation links 
+                such as the "Home", "About", "Logout" etc buttons. 
+                -->
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarToggle">
                   <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
@@ -35,12 +56,39 @@
                   <!-- Navbar Right Side -->
                   <div class="navbar-nav">
 
+                    
+                    
+                    <!-- 
+                    So the natural question is that how does our context get access to the user current variable because clearly 
+                    we didn't pass the current user along into our context various when rendering this template. So how did it do this?
+                    
+                    Check the official documentation here: 
+                    https://docs.djangoproject.com/en/3.1/ref/templates/api
+                    
+                    So we have this think called the context_processors in our projects settings.py file.
+                    This context_processors is a list of callables which are called when the request is being rendered. 
+                    It takes in as its argument, the request object and returns a dictionary of items to be merged into the context.
+                    By default, we have the "django.contrib.auth.context_processors.auth" context_processors in our settings.py and this 
+                    essentially helps ensure adds the currently-logged in user into the request context object. 
+                    If the user is not authenticated, then an AnonymousUser instance is added to the RequestContext/templates. 
+
+                    The benefit of this is that since we have access to the User object within every RequestContext/templates, 
+                    we can access other attributes object and even have access to user methods within our RequestContext/templates. 
+
+                    https://docs.djangoproject.com/en/3.1/ref/templates/api/#django-contrib-auth-context-processors-auth
+
+                    The "is_authenticated" attribute is a read-only attribute of the User object which returns True if the User object is authenticated.
+                    https://docs.djangoproject.com/en/3.1/ref/contrib/auth/#django.contrib.auth.models.User.is_authenticated
+                   -->
+
                     {% if user.is_authenticated %}
                     <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                     <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
 
                     {% else %}
+                    <!-- Contrary to the official documentation, the is_authenticated attribute does return False is the user in question is not authenticated. -->
+                    <!-- <a class="nav-item nav-link" href="#">{{ user.is_authenticated }}</a> -->
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-item nav-link" href="{% url 'user-regiser' %}">Register</a>
                     
@@ -53,18 +101,30 @@
           </header>
           
 
+            <!-- 
+            This website has been broken down into 2 main elements on the front end (the header element and this main element)
+            -->
           <main role="main" class="container">
             <div class="row">
               <div class="col-md-8">
+
+                <!-- Even if you know there is only one message, you should still iterate over the messages sequence, 
+                because otherwise the message storage will not be cleared for the next request. -->
                 {% if messages %}
                   {% for message in messages %}
+                    <!-- The reason for using the value of the message.tags as part of the bootstrap class is
+                    because the bootstrap "alert-..." class perfectly aligns with the message.tags value.  -->
                     <div class="alert alert-{{ message.tags }}">
                       {{ message }}
                     </div>
                   {% endfor %}
                 {% endif %}
+
                 {% block content %}{% endblock %}
+
               </div>
+
+
               <div class="col-md-4">
                 <div class="content-section">
                   <h3>Our Sidebar</h3>

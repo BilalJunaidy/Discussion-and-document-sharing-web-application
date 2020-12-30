@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Post
@@ -14,7 +15,8 @@ from django.contrib.auth.mixins import (
 
 # Create your views here.
 
-# The following is a function based view 
+# The following is a function based view and is not being used since its corresponding urls pattern has been commented out. 
+
 def home(request):
 
     context = {
@@ -24,7 +26,7 @@ def home(request):
     return render(request, "blog/home.html", context)
 
 # The following is a class based ListView 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Post 
     template_name = 'blog/home.html' #<app>/<model>_<viewtype>.html
     context_object_name = 'posts'
@@ -32,7 +34,7 @@ class PostListView(ListView):
     paginate_by = 5
 
 
-class UserPostListView(ListView):
+class UserPostListView(LoginRequiredMixin, ListView):
     model = Post 
     template_name = 'blog/user_posts.html' #<app>/<model>_<viewtype>.html
     context_object_name = 'posts'
@@ -43,7 +45,7 @@ class UserPostListView(ListView):
         return Post.objects.filter(author = user).order_by('-date_posted')
         
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
 
