@@ -24,18 +24,26 @@ from .models import Profile
 # and help ensure that our apps have single flow.
 
 
-The following are good resources for understanding signals:
-1. https://simpleisbetterthancomplex.com/tutorial/2016/07/28/how-to-create-django-signals.html
-2. https://medium.com/@ksarthak4ever/django-signals-b20a4152a27b
-3. https://stackabuse.com/using-django-signals-to-simplify-and-decouple-code/
+# The following are good resources for understanding signals:
+# 1. https://simpleisbetterthancomplex.com/tutorial/2016/07/28/how-to-create-django-signals.html
+# 2. https://medium.com/@ksarthak4ever/django-signals-b20a4152a27b
+# 3. https://stackabuse.com/using-django-signals-to-simplify-and-decouple-code/
 
 
 @receiver(post_save, sender = User)
 def create_profile(sender, instance, created, **kwargs):
+
+# So you were wondering why this if created condition is there, so here is the answer.
+# The save method on the sender (which is the User object in this case) is called when the user object is updated as well (therefore, triggering this post_save signal).
+# However, we don't want the post_save signal to result in the creation of a profile object if the user object has just been updated. 
+# We only want this to happen if the user object was created and therefore, we have this condition to check if the user was created. 
     if created:
-        Profile.objects.create(user = instance)
+        Profile.objects.create(user = instance, Intro = instance._Intro, age = instance._age)
+
     
 
 @receiver(post_save, sender = User)
 def save_profile(sender, instance, **kwargs):
+    # instance.profile.comment = 'bhainskitaang'
+
     instance.profile.save()

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User 
 from PIL import Image
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -68,11 +69,28 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     image = models.ImageField(default = 'default.png', upload_to = 'Profile_Pics')
 
+# The main question with Signals still remains. 
+# If my Profile proxy model has additional fields (other then the Foreign Key referencing to Django's default user model) and they are non nullable,
+# then how I am supposed to use signals to both 'create' and 'save' this Profile proxy model object without running into following error:
+# NOT NULL constraint failed: users_profile.field_name
+
+# The following is the answer to this question in my opinion:
+
+# a. https://stackoverflow.com/questions/10299034/how-to-pass-kwargs-from-save-to-post-save-signal
+# b. https://stackoverflow.com/questions/54933789/pass-additional-attributes-with-django-signals
+
+    Intro = models.CharField(max_length = 255, null = False, blank = False)
+    age = models.IntegerField(validators=[MinValueValidator(7), MaxValueValidator(100)])
+
+
     def __str__(self):
         return f"{self.user.username} Profile"
 
-    def save(self):
-        super().save()
+    # def save(self):
+    #     super().save()
+
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
 
         img = Image.open(self.image.path)
         if img.height > 300 or img.width > 300:
