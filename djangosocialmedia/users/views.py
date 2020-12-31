@@ -41,7 +41,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            
+            # This is how to add a success message into the Request Context
             messages.success(request, f'Your profile has now been updated')
             return redirect('profile')
 

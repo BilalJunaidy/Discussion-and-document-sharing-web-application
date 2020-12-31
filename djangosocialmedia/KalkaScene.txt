@@ -1,0 +1,14 @@
+1. Make sure to understand signals, play around with it and understand how they are being implemented in this project. 
+
+2. See how signals can be used to perform much more complicated tasks and play around with it.
+
+3. Go through the functionality in the "users" app - this includes forms, views, urls and models.
+
+4. Go through the class based view in the "blog" app.
+
+5. Play around with these class based views for new models that you are able to create and see if can make them to what I need them to do - This is especially important 
+    in consideration of what I intend on doing with this particular application as well as the inventory observation application. 
+
+6. Other things that are part of this project. 
+
+7. Plan the next steps of this project for me to turn it into what I want to turn this into.
