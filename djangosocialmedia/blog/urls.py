@@ -14,6 +14,11 @@ from . import views
 urlpatterns = [
     # path('', views.home, name='blog-home'),
     path('', PostListView.as_view(), name='blog-home'),
+    # "pk" is the default name of the primary key field name used by django to filter the queryset. 
+    # If you want to name it something else, you will have to override the following attribute in the class context: 
+    # pk_url_kwarg
+    # .....Having said this, there is really no need in doing this tbh, so just stick to the default of pk.
+
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name = 'post-update'),
