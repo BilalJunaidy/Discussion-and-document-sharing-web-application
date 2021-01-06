@@ -129,6 +129,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # This is how we are going to be accessing the uploaded file within the browser
 MEDIA_URL = '/media/'
 
+# The following links explain how to use the crispy form application in your django applications to render much better looking forms.
+# 1. https://django-crispy-forms.readthedocs.io/en/latest/
+# 2. https://simpleisbetterthancomplex.com/tutorial/2018/08/13/how-to-use-bootstrap-4-forms-with-django.html
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # The following redirect url represent the default url that we will be redirected to upon a successful login attempt 

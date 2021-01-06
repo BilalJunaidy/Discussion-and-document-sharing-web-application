@@ -75,9 +75,9 @@ class Profile(models.Model):
 # NOT NULL constraint failed: users_profile.field_name
 
 # The following is the answer to this question in my opinion:
-
-# a. https://stackoverflow.com/questions/10299034/how-to-pass-kwargs-from-save-to-post-save-signal
-# b. https://stackoverflow.com/questions/54933789/pass-additional-attributes-with-django-signals
+# a. https://stackabuse.com/using-django-signals-to-simplify-and-decouple-code/
+# b. https://stackoverflow.com/questions/10299034/how-to-pass-kwargs-from-save-to-post-save-signal
+# c. https://stackoverflow.com/questions/54933789/pass-additional-attributes-with-django-signals
 
     Intro = models.CharField(max_length = 255, null = False, blank = False)
     age = models.IntegerField(validators=[MinValueValidator(7), MaxValueValidator(100)])

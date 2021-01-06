@@ -33,13 +33,24 @@ def register(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
+        # Passing in the instance over here is part of the official django documentation. 
+        # The reason why I was confused initially was because I was unsure as to how this instance argument is going to be treated by Django.
+
+        # So how it is actually created? As per the official django documentation on this topic:
+        # https://docs.djangoproject.com/en/3.1/topics/forms/modelforms/#the-save-method
+
+        # Basically, if we pass an instance argument before calling in the .save() method, then 
+        # django will update the updated form values in the POST request for that particular object instance. 
+
+        # If this is not provided however, then django will create a new object that represents the model of the ModelForm.
+
         u_form = UserUpdateForm(request.POST, instance = request.user)
-        print(f"U FORM: {u_form}")
+        # print(f"U FORM: {u_form}")
         
 
         p_form = ProfileUpdateForm(request.POST, request.FILES, 
         instance = request.user.profile)
-        print(f"P FORM: {p_form}")
+        # print(f"P FORM: {p_form}")
 
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()

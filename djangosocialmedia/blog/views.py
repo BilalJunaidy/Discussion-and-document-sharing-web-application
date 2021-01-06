@@ -13,10 +13,19 @@ from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     UserPassesTestMixin)
 
+
+# A little something about class-based views:
+
+# At its core, a class-based view allows you to respond to different HTTP request methods with different class instance methods, 
+# instead of with conditionally branching code inside a single view function.
+
+# Attributes associated with class-based views can be overridden either by either one of the following methods:
+# 1. Passing in the name of the attribute and its value within the as_view() method, such as like template_name = "bhains.html"
+# 2. Or you can do what we have done below, and simply associating a value for a particular attribute 
+
 # Create your views here.
 
 # The following is a function based view and is not being used since its corresponding urls pattern has been commented out. 
-
 def home(request):
 
     context = {
@@ -27,6 +36,7 @@ def home(request):
 
 # The following is a class based ListView 
 class PostListView(LoginRequiredMixin, ListView):
+
     model = Post 
     template_name = 'blog/home.html' #<app>/<model>_<viewtype>.html
     context_object_name = 'posts'

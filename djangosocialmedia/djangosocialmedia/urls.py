@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include("blog.urls")),
     # path('user', include("users.urls")),
     path('register/', user_views.register, name='user-regiser'),
+    # Nothing special about the following two functions and you can either use the function based views for logging in and logging out users or these class based built in views. 
     path('login/', auth_views.LoginView.as_view(template_name = "users/login.html"), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name = "users/logout.html"), name='logout'),
 
